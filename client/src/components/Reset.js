@@ -1,11 +1,59 @@
-import React from 'react'
+import React from "react";
+
+import styles from "../styles/Username.module.css";
+import { Toaster } from "react-hot-toast";
+import { useFormik } from "formik";
+import { resetPasswordValidation } from "../helper/validate";
 
 const Reset = () => {
-  return (
-    <div>
-      reset
-    </div>
-  )
-}
+  const formik = useFormik({
+    initialValues: {
+      password: "",
+      confirm_pwd: "",
+    },
+    validate: resetPasswordValidation,
+    validateOnBlur: false,
+    validateOnChange: false,
+    onSubmit: async (values) => {
+      console.log(values);
+    },
+  });
 
-export default Reset
+  return (
+    <div class="container mx-auto">
+      <Toaster position="top-center" reverseOrder={false}></Toaster>
+      <div className="flex justify-center items-center h-screen">
+        <div className={styles.glass}>
+          <div className="title flex flex-col item-center">
+            <h1 className="text-5xl font-bold text-center">Reset Password</h1>
+            <span className="py-4 text-xl  text-center text-gray-500">
+              Enter New Password
+            </span>
+          </div>
+
+          <form className="pt-20" onSubmit={formik.handleSubmit}>
+            <div className="textbox flex flex-col items-center gap-6">
+              <input
+                {...formik.getFieldProps("password")}
+                className={styles.textbox}
+                type="password"
+                placeholder="New Password"
+              />
+              <input
+                {...formik.getFieldProps("confirm_pwd")}
+                className={styles.textbox}
+                type="password"
+                placeholder="Confirm Password"
+              />
+              <button className={styles.btn} type="submit">
+                Reset
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Reset;
