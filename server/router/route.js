@@ -9,7 +9,7 @@ import { registerMail } from "../controllers/mailer.js";
 //post methods
 router.route("/register").post(controller.register); //register user
  router.route('/registerMail').post(registerMail); //send mail
-router.route("/authenticate").post((req, res) => res.end()); //auth user
+router.route("/authenticate").post(controller.verifyUser,(req, res) => res.end()); //auth user
 router.route("/login").post(controller.verifyUser, controller.login); //login
 
 //get methods
